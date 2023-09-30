@@ -52,8 +52,8 @@ export class Database {
         const rowIndex = this.#database[table].findIndex(row => row.id === id)
 
         if (rowIndex > -1) {
-          this.#database[table][rowIndex] = { ...this.#database[table][rowIndex], ...data };
-          this.#persist();
+            this.#database[table][rowIndex] = {...this.#database[table][rowIndex], ...data };
+            this.#persist();
         } else {
             throw 'Task não encontrada';
         }
@@ -63,8 +63,12 @@ export class Database {
         const rowIndex = this.#database[table].findIndex(row => row.id === id)
 
         if (rowIndex > -1) {
-          this.#database[table][rowIndex] = { ...this.#database[table][rowIndex], completed_at: Date.now() };
-          this.#persist();
+            this.#database[table][rowIndex] = {
+                ...this.#database[table][rowIndex],
+                completed_at: Date.now(),
+                updated_at: Date.now()
+            };
+            this.#persist();
         } else {
             throw 'Task não encontrada';
         }
