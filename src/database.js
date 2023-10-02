@@ -37,6 +37,16 @@ export class Database {
         return data;
     }
 
+    atomicInsert(table, data) {
+        if (Array.isArray(this.#database[table])) {
+            this.#database[table] = this.#database[table].concat(data);
+        } else {
+            this.#database[table] = data;
+        }
+
+        this.#persist();
+    }
+
     delete(table, id) {
         const rowIndex = this.#database[table].findIndex(row => row.id === id);
 

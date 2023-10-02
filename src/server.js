@@ -17,7 +17,6 @@ const server = http.createServer(async (req, res) => {
 
         req.params = params;
 
-
         return route.handler(req, res);
     }
 

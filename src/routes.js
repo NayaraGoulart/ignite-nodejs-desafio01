@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { Database } from './database.js';
 import { buildRoutePath } from './utils/build-route-path.js';
+import { readCsvData } from './middlewares/read-csv.js';
 
 const database = new Database();
 
@@ -93,6 +94,17 @@ export const routes = [
             } catch (error) {
                 return res.writeHead(400).end(error);
             }
+        }
+    },
+    {
+        method: 'POST',
+        path: buildRoutePath('/tasks/upload'),
+        handler: (req, res) => {
+            readCsvData(req, res);
+
+            database.atomicInsert('tasks', req.body);
+
+            return res.writeHead(201).end();
         }
     },
 ];

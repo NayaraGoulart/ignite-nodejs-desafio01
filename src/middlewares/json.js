@@ -6,7 +6,11 @@ export async function json(req, res) {
     }
 
     try {
-        req.body = JSON.parse(Buffer.concat(buffers).toString());
+        if (req.headers['content-type'] === 'text/csv') {
+            req.body = Buffer.concat(buffers).toString('utf-8');
+        } else {
+            req.body = JSON.parse(Buffer.concat(buffers).toString());
+        }
     } catch {
         req.body = null;
     }
